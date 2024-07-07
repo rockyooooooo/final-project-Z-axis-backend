@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y mariadb-client
 
 EXPOSE 5001
 
-CMD ["node", "index.js"]
+CMD ["sh", "-c", "npm run db:migrate && npm run start"]
 
 # Keep the container running for debugging purposes
 # CMD ["tail", "-f", "/dev/null"]
