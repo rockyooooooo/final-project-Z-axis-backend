@@ -1,5 +1,4 @@
 const express = require('express')
-const dotenv = require('dotenv')
 const cors = require('cors')
 const app = express()
 
@@ -22,12 +21,9 @@ const commentRouter = require('./routes/commentRouter')
 const guestRouter = require('./routes/guestRouter')
 const relationRouter = require('./routes/relationRouter')
 
-const result = dotenv.config()
-if (result.error) {
-  throw result.error
-}
-const { PORT } = result.parsed
-const port = PORT || 5001
+const port = process.env.NODE_ENV === 'production'
+  ? process.env.PORT
+  : 5001
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))

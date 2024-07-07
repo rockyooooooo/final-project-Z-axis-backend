@@ -3,11 +3,14 @@ const { GeneralError } = require('../middlewares/error')
 const db = require('../models')
 const { Guest } = db
 
-const result = dotenv.config()
-if (result.error) {
-  throw result.error
+let GUEST_TOKEN_LENGTH = process.env.GUEST_TOKEN_LENGTH
+if (process.env.NODE_ENV === 'development') {
+  const result = dotenv.config()
+  if (result.error) {
+    throw result.error
+  }
+  GUEST_TOKEN_LENGTH = result.parsed.GUEST_TOKEN_LENGTH
 }
-const { GUEST_TOKEN_LENGTH } = result.parsed
 
 const generateRandomString = (num) => {
   const result = Math.random()

@@ -1,15 +1,20 @@
 const crypto = require('crypto')
 const dotenv = require('dotenv')
 
-const result = dotenv.config()
-if (result.error) {
-  throw result.error
-}
-const {
+let {
   CRYPTO_ALGORITHM: algorithm,
   CRYPTO_KEY: key,
   CRYPTO_IV: iv
-} = result.parsed
+} = process.env
+if (process.env.NODE_ENV === 'development') {
+  const result = dotenv.config()
+  if (result.error) {
+    throw result.error
+  }
+  algorithm = result.parsed.CRYPTO_ALGORITHM
+  key = result.parsed.CRYPTO_KEY
+  iv = result.parsed.CRYPTO_IV
+}
 
 function encrypt (text) {
   const cipher = crypto.createCipheriv(algorithm, key, iv)

@@ -5,11 +5,14 @@ const { User, Issue, Comment, Guest } = db
 
 const { GeneralError, NotFound, Unauthorized } = require('./error')
 
-const result = dotenv.config()
-if (result.error) {
-  throw result.error
+let JWT_SECRET_KEY = process.env.JWT_SECRET_KEY
+if (process.env.NODE_ENV === 'development') {
+  const result = dotenv.config()
+  if (result.error) {
+    throw result.error
+  }
+  JWT_SECRET_KEY = result.parsed.JWT_SECRET_KEY
 }
-const { JWT_SECRET_KEY } = result.parsed
 
 const emailToJwtToken = (email) => {
   const payload = {

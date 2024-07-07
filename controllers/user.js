@@ -10,11 +10,15 @@ const {
 const { emailToJwtToken } = require('../middlewares/authority')
 
 const { User } = db
-const result = dotenv.config()
-if (result.error) {
-  throw result.error
+
+let SALTROUNDS = process.env.SALTROUNDS
+if (process.env.NODE_ENV === 'development') {
+  const result = dotenv.config()
+  if (result.error) {
+    throw result.error
+  }
+  SALTROUNDS = result.parsed.SALTROUNDS
 }
-const { SALTROUNDS } = result.parsed
 
 const isEmailFormatValid = (email) => {
   const regex =
