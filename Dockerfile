@@ -1,4 +1,4 @@
-FROM node:14
+FROM node:14-alpine
 
 WORKDIR /app
 
@@ -7,7 +7,7 @@ COPY . .
 RUN npm install
 
 # install mariadb for healthcheck
-RUN apt-get update && apt-get install -y mariadb-client
+RUN apk update && apk add mariadb-client
 
 EXPOSE 5001
 
